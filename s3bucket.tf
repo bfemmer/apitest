@@ -11,7 +11,7 @@ provider "aws" {
   region  = var.region
   profile = var.profile
 }
-resource "aws_s3_bucket" "hybrid" {
+resource "aws_s3_bucket" "va" {
   provider      = aws.user
   bucket        = var.bucket_name
   acl           = var.acl_value
@@ -20,7 +20,7 @@ resource "aws_s3_bucket" "hybrid" {
 
 resource "aws_s3_bucket_object" "object2" {
   for_each = fileset("myfiles/", "*")
-  bucket   = aws_s3_bucket.hybrid.bucket
+  bucket   = aws_s3_bucket.va.bucket
   key      = "new_objects"
   source   = "myfiles/${each.value}"
   etag     = filemd5("myfiles/${each.value}")
